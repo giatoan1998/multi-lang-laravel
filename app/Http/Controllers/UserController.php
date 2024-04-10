@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Exports\ExportUser;
-use Illuminate\Support\Facades\Response;
+use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Excel;
+
+// use PDF;
 class UserController extends Controller
 {
     public function getUsers() {
@@ -17,8 +20,14 @@ class UserController extends Controller
     }
 
     public function exportExcel() {
-        return \Excel::download(new ExportUser, 'user.xlsx');
+        return Excel::download(new ExportUser, 'user.xlsx');
     }
-
     // php artisan make:export ExportUser
+
+    public function exportPdf() {
+        $users = User::all();
+        $pdf = Pdf::loadView('pdf.users', compact('users'));
+
+        return $pdf->download('users.pdf');
+    }
 }
