@@ -36,3 +36,5 @@ Route::get('/data-users', [UserController::class, 'getUsers']);
 
 Route::get('/data-lists', [ListsController::class, 'getLists']);
 Route::post('/update-data-lists', [ListsController::class, 'updateLists']);
+
+Route::get('/export-excel', [UserController::class, 'exportExcel']);
